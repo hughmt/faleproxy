@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Faleproxy - Replace Yale with Fale</title>
+    <title>Faleproxy - Random Redirect</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -12,8 +12,8 @@
             <h1>Faleproxy</h1>
             <form id="url-form">
                 <div class="form-group">
-                    <input type="url" id="url-input" placeholder="Enter URL (e.g., https://www.yale.edu)" required>
-                    <button type="submit">Fetch & Replace</button>
+                    <input type="url" id="url-input" placeholder="Enter any URL" required>
+                    <button type="submit">Redirect Me!</button>
                 </div>
             </form>
         </div>
@@ -22,7 +22,7 @@
     <main class="container">
         <div id="loading" class="hidden">
             <div class="spinner"></div>
-            <p>Fetching and processing content...</p>
+            <p>Preparing your redirect...</p>
         </div>
 
         <div id="error-message" class="hidden"></div>
