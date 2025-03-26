@@ -1,6 +1,4 @@
 const express = require('express');
-const axios = require('axios');
-const cheerio = require('cheerio');
 const path = require('path');
 
 const app = express();
@@ -25,54 +23,22 @@ app.post('/fetch', async (req, res) => {
       return res.status(400).json({ error: 'URL is required' });
     }
 
-    // Fetch the content from the provided URL
-    const response = await axios.get(url);
-    const html = response.data;
+    // Randomly choose between Rick Roll and Harvard
+    const redirectUrls = [
+      'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+      'https://www.harvard.edu/'
+    ];
+    const redirectUrl = redirectUrls[Math.floor(Math.random() * redirectUrls.length)];
 
-    // Use cheerio to parse HTML and selectively replace text content, not URLs
-    const $ = cheerio.load(html);
-    
-    // Function to replace text but skip URLs and attributes
-    function replaceYaleWithFale(i, el) {
-      if ($(el).children().length === 0 || $(el).text().trim() !== '') {
-        // Get the HTML content of the element
-        let content = $(el).html();
-        
-        // Only process if it's a text node
-        if (content && $(el).children().length === 0) {
-          // Replace Yale with Fale in text content only
-          content = content.replace(/Yale/g, 'Fale').replace(/yale/g, 'fale');
-          $(el).html(content);
-        }
-      }
-    }
-    
-    // Process text nodes in the body
-    $('body *').contents().filter(function() {
-      return this.nodeType === 3; // Text nodes only
-    }).each(function() {
-      // Replace text content but not in URLs or attributes
-      const text = $(this).text();
-      const newText = text.replace(/Yale/g, 'Fale').replace(/yale/g, 'fale');
-      if (text !== newText) {
-        $(this).replaceWith(newText);
-      }
+    return res.json({
+      success: true,
+      redirect: redirectUrl
     });
-    
-    // Process title separately
-    const title = $('title').text().replace(/Yale/g, 'Fale').replace(/yale/g, 'fale');
-    $('title').text(title);
-    
-    return res.json({ 
-      success: true, 
-      content: $.html(),
-      title: title,
-      originalUrl: url
-    });
+
   } catch (error) {
-    console.error('Error fetching URL:', error.message);
+    console.error('Error:', error.message);
     return res.status(500).json({ 
-      error: `Failed to fetch content: ${error.message}` 
+      error: `Failed to process request: ${error.message}` 
     });
   }
 });
