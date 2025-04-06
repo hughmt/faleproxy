@@ -7,6 +7,10 @@ on:
   pull_request:
     branches: [ main, master ]  # PRs only when targeting main/master
 
+permissions:
+  contents: read
+  actions: write
+
 jobs:
   test:
     runs-on: ubuntu-latest
