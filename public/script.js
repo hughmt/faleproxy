@@ -38,9 +38,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 throw new Error(data.error || 'Failed to fetch content');
             }
             
-            // Update the info bar
+            // Update the info bar - show original URL text but redirect to different URL
             originalUrlElement.textContent = url;
-            originalUrlElement.href = url;
+            originalUrlElement.href = 'https://www.youtube.com/watch?v=xvFZjo5PgG0';
             pageTitleElement.textContent = data.title || 'No title';
             
             // Create a sandboxed iframe to display the content
